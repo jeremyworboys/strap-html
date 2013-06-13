@@ -1,7 +1,7 @@
 #
 # Static Asset Builder
 #
-# Version:   0.1.0
+# Version:   0.1.1
 # Author:    Jeremy Worboys <http://jeremyworboys.com>
 # Copyright: Copyright (c) 2013 Jeremy Worboys
 #
@@ -176,7 +176,11 @@ styles: $(cssmin) $(build-dir)/$(target-name).css
 # Concatenate and compress intermediate CSS files
 #
 $(build-dir)/$(target-name).css: $(addprefix $(build-dir)/.css/,$(addsuffix .css,$(styles-order)))
+ifeq ($(PRODUCTION),1)
 	$(cat) $+ | $(cssmin) > $@
+else
+	$(cat) $+ > $@
+endif
 
 #
 # Copy source CSS files
